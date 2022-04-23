@@ -34,7 +34,7 @@ class LoginScreen extends StatelessWidget {
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Email Tidak Boleh Kosong';
+                      return 'Email Tidak Boleh Kosong1';
                     }
                     return null;
                   },
