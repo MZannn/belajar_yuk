@@ -69,6 +69,7 @@ class LoginScreen extends StatelessWidget {
                             onPressed: () {
                               if (_formKey.currentState!.validate()) {
                                 _formKey.currentState!.save();
+                                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => BukuHomeScreen(),));
                               }
                             },
                             child: const Text('Log in')),
