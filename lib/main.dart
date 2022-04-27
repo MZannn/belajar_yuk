@@ -1,19 +1,20 @@
-import 'package:belajar_yuk/screen/buku/belajar_yuk_view_model.dart';
-import 'package:belajar_yuk/screen/buku/login_screen.dart';
+import 'package:belajar_yuk/screen/login/login_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:get/get.dart';
 
 void main() {
-  runApp(MultiProvider(
-    providers: [
-      ChangeNotifierProvider(
-        create: (context) => BelajarYukViewModel(),
-      )
-    ],
-    child: const MaterialApp(
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({ Key? key }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Belajar Yuk',
       home: LoginScreen(),
-    ),
-  ));
+      title: 'Nabung Yuk',
+    );
+  }
 }
