@@ -1,5 +1,6 @@
-import 'package:belajar_yuk/controller/text_controller.dart';
-import 'package:belajar_yuk/screen/login/register_screen.dart';
+import 'package:nabung_yuk/controller/text_controller.dart';
+import 'package:nabung_yuk/screen/login/register_screen.dart';
+import 'package:nabung_yuk/screen/nabung/dashboard_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -118,7 +119,7 @@ class LoginScreen extends StatelessWidget {
                                 backgroundColor:
                                     const Color.fromARGB(255, 248, 76, 76),
                               );
-                              Get.to(() => const LoginScreen());
+                              Get.off(() => const DashboardScreen());
                             } else {
                               Get.snackbar(
                                 'Login Gagal',
@@ -132,14 +133,10 @@ class LoginScreen extends StatelessWidget {
                           }
                         },
                         child: const Text('Login'),
-                        style: ButtonStyle(
-                            foregroundColor:
-                                MaterialStateProperty.all(Colors.white),
-                            backgroundColor: MaterialStateProperty.all(
-                                const Color.fromARGB(255, 248, 76, 76)),
-                            shape: MaterialStateProperty.all(
-                                RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(30)))),
+                        style: ElevatedButton.styleFrom(
+                            primary: Colors.redAccent,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30))),
                       ),
                     ),
                     const SizedBox(
@@ -151,8 +148,8 @@ class LoginScreen extends StatelessWidget {
                         const Text('Don,t have an account? '),
                         TextButton(
                           onPressed: () {
-                            ctrl.email.clear();
-                            ctrl.password.clear();
+                            // ctrl.email.clear();
+                            // ctrl.password.clear();
                             Get.to(() => const RegisterScreen(),
                                 transition: Transition.leftToRightWithFade,
                                 duration: const Duration(milliseconds: 300));

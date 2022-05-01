@@ -1,4 +1,4 @@
-import 'package:belajar_yuk/controller/text_controller.dart';
+import 'package:nabung_yuk/controller/text_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -8,7 +8,7 @@ class RegisterScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _formKey = GlobalKey<FormState>();
-    final ctrl = Get.put(TextController());
+    final ctrl = Get.put(TextController(),tag: 'register');
     return Scaffold(
       body: ListView(
         children: [
@@ -126,15 +126,9 @@ class RegisterScreen extends StatelessWidget {
                         child: ElevatedButton(
                           onPressed: () {},
                           child: const Text('Register'),
-                          style: ButtonStyle(
-                              foregroundColor:
-                                  MaterialStateProperty.all(Colors.white),
-                              backgroundColor: MaterialStateProperty.all(
-                                  const Color.fromARGB(255, 248, 76, 76)),
-                              shape: MaterialStateProperty.all(
-                                  RoundedRectangleBorder(
-                                      borderRadius:
-                                          BorderRadius.circular(30)))),
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.redAccent,shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30))
+                          ),
                         ),
                       ),
                       const SizedBox(

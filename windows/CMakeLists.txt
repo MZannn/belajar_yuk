@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.14)
-project(belajar_yuk LANGUAGES CXX)
+project(nabungLANGUAGES CXX)
 
-set(BINARY_NAME "belajar_yuk")
+set(BINARY_NAME "nabungyuk")
 
 cmake_policy(SET CMP0063 NEW)
 

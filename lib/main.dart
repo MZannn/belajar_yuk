@@ -1,4 +1,4 @@
-import 'package:belajar_yuk/screen/login/login_screen.dart';
+import 'package:nabung_yuk/screen/login/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
