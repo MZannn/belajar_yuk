@@ -50,7 +50,7 @@ class LoginScreen extends StatelessWidget {
                           contentPadding: EdgeInsets.only(left: 40),
                           prefixIcon: Icon(
                             Icons.mail_outline,
-                            color: Color.fromARGB(255, 248, 76, 76),
+                            color: Colors.redAccent,
                           ),
                           labelText: 'Email',
                           hintText: 'Masukkan Email',
@@ -74,15 +74,15 @@ class LoginScreen extends StatelessWidget {
                             ),
                             prefixIcon: const Icon(
                               Icons.key,
-                              color: Color.fromARGB(255, 248, 76, 76),
+                              color: Colors.redAccent
                             ),
                             suffixIcon: GestureDetector(
                               onTap: () => {
                                 ctrl.ishidden.toggle(),
                               },
                               child: ctrl.ishidden.value == false
-                                  ? const Icon(Icons.visibility_off)
-                                  : const Icon(Icons.visibility),
+                                  ? const Icon(Icons.visibility_off,)
+                                  : const Icon(Icons.visibility,color: Colors.redAccent),
                             ),
                             contentPadding: const EdgeInsets.only(left: 40),
                             labelText: 'Password',
@@ -116,8 +116,7 @@ class LoginScreen extends StatelessWidget {
                                 animationDuration:
                                     const Duration(milliseconds: 300),
                                 duration: const Duration(seconds: 2),
-                                backgroundColor:
-                                    const Color.fromARGB(255, 248, 76, 76),
+                                backgroundColor: Colors.redAccent,
                               );
                               Get.off(() => const DashboardScreen());
                             } else {
@@ -148,8 +147,8 @@ class LoginScreen extends StatelessWidget {
                         const Text('Don,t have an account? '),
                         TextButton(
                           onPressed: () {
-                            // ctrl.email.clear();
-                            // ctrl.password.clear();
+                            ctrl.email.clear();
+                            ctrl.password.clear();
                             Get.to(() => const RegisterScreen(),
                                 transition: Transition.leftToRightWithFade,
                                 duration: const Duration(milliseconds: 300));
@@ -157,7 +156,7 @@ class LoginScreen extends StatelessWidget {
                           child: const Text(
                             'Register',
                             style: TextStyle(
-                              color: Color.fromARGB(255, 248, 76, 76),
+                              color: Colors.redAccent,
                             ),
                           ),
                         )
