@@ -1,21 +1,53 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:nabung_yuk/controller/change_password_controller.dart';
+import 'package:nabung_yuk/controller/dashboard_controller.dart';
+import 'package:nabung_yuk/controller/home_controller.dart';
+import 'package:nabung_yuk/controller/login_controller.dart';
+import 'package:nabung_yuk/controller/register_controller.dart';
+import 'package:nabung_yuk/screen/login/loading_screen.dart';
 import 'package:nabung_yuk/screen/login/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:nabung_yuk/screen/nabung/dashboard_screen.dart';
+import 'controller/auth_controller.dart';
+import 'controller/tambah_tabungan_controller.dart';
+import 'firebase_options.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
+  MyApp({Key? key}) : super(key: key);
+  final tambahC = Get.put(TambahTabunganController());
+  final authC = Get.put(AuthController());
+  final bottomBar = Get.put(DashboardController());
+  final loginC = Get.put(LoginController());
+  final regisC = Get.put(RegisterController());
+  final changePC = Get.put(ChangePasswordController());
+  final homeC = Get.put(HomeController());
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(primaryColor: Colors.redAccent),
-      home: const LoginScreen(),
-      title: 'Nabung Yuk',
+    return StreamBuilder<User?>(
+      stream: authC.streamAuthStatus,
+      builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+        if (snapshot.connectionState == ConnectionState.active) {
+          return GetMaterialApp(
+            title: 'Nabung Yuk',
+            debugShowCheckedModeBanner: false,
+            home: snapshot.data != null
+                ? const DashboardScreen()
+                : const LoginScreen(),
+          );
+        } else {
+          return const LoadingScreen();
+        }
+      },
     );
   }
 }

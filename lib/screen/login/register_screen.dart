@@ -1,6 +1,7 @@
-import 'package:nabung_yuk/controller/text_controller.dart';
+import 'package:nabung_yuk/controller/auth_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:nabung_yuk/controller/register_controller.dart';
 
 class RegisterScreen extends StatelessWidget {
   const RegisterScreen({Key? key}) : super(key: key);
@@ -8,7 +9,8 @@ class RegisterScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _formKey = GlobalKey<FormState>();
-    final ctrl = Get.put(TextController(),tag: 'register');
+    final authC = Get.find<AuthController>();
+    final regisC = Get.find<RegisterController>();
     return Scaffold(
       body: ListView(
         children: [
@@ -39,32 +41,12 @@ class RegisterScreen extends StatelessWidget {
                       const SizedBox(
                         height: 20,
                       ),
-                      TextFormField(
-                        controller: ctrl.name,
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(30)),
-                          ),
-                          contentPadding: EdgeInsets.only(left: 40),
-                          prefixIcon: Icon(
-                            Icons.person,
-                            color: Color.fromARGB(255, 248, 76, 76),
-                          ),
-                          labelText: 'Nama',
-                          hintText: 'Masukkan Nama',
-                        ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Nama Tidak Boleh Kosong';
-                          }
-                          return null;
-                        },
-                      ),
                       const SizedBox(
                         height: 10,
                       ),
+                      
                       TextFormField(
-                        controller: ctrl.email,
+                        controller: regisC.email,
                         decoration: const InputDecoration(
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(30)),
@@ -88,8 +70,8 @@ class RegisterScreen extends StatelessWidget {
                         height: 10,
                       ),
                       Obx(() => TextFormField(
-                            obscureText: ctrl.ishidden.value,
-                            controller: ctrl.password,
+                            obscureText: regisC.ishidden.value,
+                            controller: regisC.password,
                             decoration: InputDecoration(
                               border: const OutlineInputBorder(
                                   borderRadius:
@@ -99,11 +81,11 @@ class RegisterScreen extends StatelessWidget {
                                 Icons.key,
                                 color: Color.fromARGB(255, 248, 76, 76),
                               ),
-                              suffixIcon: GestureDetector(
-                                onTap: () {
-                                  ctrl.ishidden.toggle();
+                              suffixIcon: IconButton(
+                                onPressed: () {
+                                  regisC.ishidden.toggle();
                                 },
-                                child: ctrl.ishidden.value == false
+                                icon: regisC.ishidden.value == false
                                     ? const Icon(Icons.visibility_off)
                                     : const Icon(Icons.visibility),
                               ),
@@ -124,11 +106,17 @@ class RegisterScreen extends StatelessWidget {
                       SizedBox(
                         width: double.infinity,
                         child: ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            if (_formKey.currentState!.validate()) {
+                              _formKey.currentState!.save();
+                              authC.signUp(regisC.email.text, regisC.password.text);
+                            }
+                          },
                           child: const Text('Register'),
                           style: ElevatedButton.styleFrom(
-                            primary: Colors.redAccent,shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30))
-                          ),
+                              primary: Colors.redAccent,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30))),
                         ),
                       ),
                       const SizedBox(
@@ -140,9 +128,8 @@ class RegisterScreen extends StatelessWidget {
                           const Text('Already have an account? '),
                           TextButton(
                             onPressed: () {
-                              ctrl.name.clear();
-                              ctrl.email.clear();
-                              ctrl.password.clear();
+                              regisC.email.clear();
+                              regisC.password.clear();
                               Get.back();
                             },
                             child: const Text(

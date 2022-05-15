@@ -1,4 +1,4 @@
-import 'package:nabung_yuk/controller/bottom_bar_controller.dart';
+import 'package:nabung_yuk/controller/dashboard_controller.dart';
 import 'package:nabung_yuk/screen/nabung/profile_screen.dart';
 import 'package:nabung_yuk/screen/nabung/home_screen.dart';
 import 'package:nabung_yuk/screen/nabung/tambah_tabungan_screen.dart';
@@ -10,9 +10,9 @@ class DashboardScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Get.put(BottomBarController());
-    return GetBuilder<BottomBarController>(
+    return GetBuilder<DashboardController>(
       builder: (controller) {
+        Get.find<DashboardController>();
         return Scaffold(
           body: SafeArea(
             child: IndexedStack(
@@ -25,7 +25,7 @@ class DashboardScreen extends StatelessWidget {
           ),
           floatingActionButton: FloatingActionButton(
             onPressed: () {
-              Get.to(()=>const Menabung());
+              Get.to(() => const Menabung());
             },
             child: const Icon(Icons.add),
             backgroundColor: Colors.redAccent,

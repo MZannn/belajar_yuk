@@ -11,10 +11,21 @@ class Menabung extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: ListView(children: [
-          const Text(
-            'Tambah Tabungan',
-            style: TextStyle(
-                color: Colors.black, fontWeight: FontWeight.bold, fontSize: 30),
+          Row(
+            children: [
+              IconButton(
+                  onPressed: () {
+                    Get.back();
+                  },
+                  icon: const Icon(Icons.arrow_back_ios)),
+              const Text(
+                'Tambah Tabungan',
+                style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 30),
+              ),
+            ],
           ),
           Padding(
             padding: const EdgeInsets.only(left: 10),
@@ -22,13 +33,16 @@ class Menabung extends StatelessWidget {
               children: [
                 const Icon(Icons.payment),
                 Expanded(
-                  flex: 0,
+                    flex: 0,
                     child: TextButton(
-                  child: const Text('GoPay',style: TextStyle(color: Colors.black),),
-                  onPressed: () {
-                    Get.off(()=>const Gopay());
-                  },
-                ))
+                      child: const Text(
+                        'GoPay',
+                        style: TextStyle(color: Colors.black),
+                      ),
+                      onPressed: () {
+                        Get.off(() => const Gopay());
+                      },
+                    ))
               ],
             ),
           )

@@ -1,6 +1,6 @@
-import 'package:nabung_yuk/controller/text_controller.dart';
+import 'package:nabung_yuk/controller/auth_controller.dart';
+import 'package:nabung_yuk/controller/login_controller.dart';
 import 'package:nabung_yuk/screen/login/register_screen.dart';
-import 'package:nabung_yuk/screen/nabung/dashboard_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -10,7 +10,8 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _formKey = GlobalKey<FormState>();
-    final ctrl = Get.put(TextController());
+    final loginC = Get.find<LoginController>();
+    final authC = Get.find<AuthController>();
     return Scaffold(
       body: ListView(
         children: [
@@ -42,7 +43,8 @@ class LoginScreen extends StatelessWidget {
                       height: 25,
                     ),
                     TextFormField(
-                        controller: ctrl.email,
+                        controller: loginC.email,
+                        textInputAction: TextInputAction.next,
                         decoration: const InputDecoration(
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(30)),
@@ -65,24 +67,27 @@ class LoginScreen extends StatelessWidget {
                       height: 10,
                     ),
                     Obx(() => TextFormField(
-                          obscureText: ctrl.ishidden.value,
-                          controller: ctrl.password,
+                          obscureText: loginC.ishidden.value,
+                          controller: loginC.password,
+                          textInputAction: TextInputAction.done,
                           decoration: InputDecoration(
                             border: const OutlineInputBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(30)),
                             ),
-                            prefixIcon: const Icon(
-                              Icons.key,
-                              color: Colors.redAccent
-                            ),
-                            suffixIcon: GestureDetector(
-                              onTap: () => {
-                                ctrl.ishidden.toggle(),
+                            prefixIcon:
+                                const Icon(Icons.key, color: Colors.redAccent),
+                            suffixIcon: IconButton(
+                              onPressed: () {
+                                loginC.ishidden.toggle();
                               },
-                              child: ctrl.ishidden.value == false
-                                  ? const Icon(Icons.visibility_off,)
-                                  : const Icon(Icons.visibility,color: Colors.redAccent),
+                              icon: loginC.ishidden.value == false
+                                  ? const Icon(
+                                      Icons.visibility_off,
+                                    )
+                                  : const Icon(
+                                      Icons.visibility,
+                                    ),
                             ),
                             contentPadding: const EdgeInsets.only(left: 40),
                             labelText: 'Password',
@@ -103,32 +108,10 @@ class LoginScreen extends StatelessWidget {
                       width: double.infinity,
                       child: ElevatedButton(
                         onPressed: () {
-                          String email = ctrl.email.text;
-                          String password = ctrl.password.text;
+                         
                           if (_formKey.currentState!.validate()) {
                             _formKey.currentState!.save();
-                            if (email == "Fauzan" && password == "Fauzan123") {
-                              Get.snackbar(
-                                'Login Sukses',
-                                'Welcome',
-                                colorText: Colors.white,
-                                isDismissible: true,
-                                animationDuration:
-                                    const Duration(milliseconds: 300),
-                                duration: const Duration(seconds: 2),
-                                backgroundColor: Colors.redAccent,
-                              );
-                              Get.off(() => const DashboardScreen());
-                            } else {
-                              Get.snackbar(
-                                'Login Gagal',
-                                'Email Atau Password Salah',
-                                isDismissible: true,
-                                animationDuration:
-                                    const Duration(milliseconds: 300),
-                                duration: const Duration(seconds: 2),
-                              );
-                            }
+                            authC.login(loginC.email.text, loginC.password.text);
                           }
                         },
                         child: const Text('Login'),
@@ -147,8 +130,8 @@ class LoginScreen extends StatelessWidget {
                         const Text('Don,t have an account? '),
                         TextButton(
                           onPressed: () {
-                            ctrl.email.clear();
-                            ctrl.password.clear();
+                            loginC.email.clear();
+                            loginC.password.clear();
                             Get.to(() => const RegisterScreen(),
                                 transition: Transition.leftToRightWithFade,
                                 duration: const Duration(milliseconds: 300));

@@ -1,5 +1,5 @@
-import 'package:nabung_yuk/controller/text_controller.dart';
-import 'package:nabung_yuk/screen/login/login_screen.dart';
+import 'package:nabung_yuk/controller/auth_controller.dart';
+import 'package:nabung_yuk/controller/login_controller.dart';
 import 'package:nabung_yuk/screen/nabung/change_password_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,7 +9,8 @@ class AkunScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ctrl = Get.put(TextController());
+    final loginC = Get.find<LoginController>();
+    final authC = Get.find<AuthController>();
     return Scaffold(
       body: Container(
         padding: const EdgeInsets.all(20.0),
@@ -28,7 +29,9 @@ class AkunScreen extends StatelessWidget {
                   ),
                 ),
                 TextButton(onPressed: (){
-                  Get.offAll(()=>const LoginScreen());
+                  authC.logOut();
+                  loginC.email.clear();
+                  loginC.password.clear();
                 }, child: const Text('Logout',style: TextStyle(color: Colors.redAccent)),)
               ],
             ),
@@ -36,20 +39,7 @@ class AkunScreen extends StatelessWidget {
               height: 20,
             ),
             TextFormField(
-              controller: ctrl.name,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide:
-                      const BorderSide(width: 0, style: BorderStyle.none),
-                ),
-                hintText: 'Nama',
-                labelText:'Nama',
-                enabled: false,
-              ),
-            ),
-            TextFormField(
-              controller: ctrl.email,
+              controller: loginC.email,
               decoration: InputDecoration(
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
@@ -61,21 +51,7 @@ class AkunScreen extends StatelessWidget {
                 enabled: false,
               ),
             ),
-            TextFormField(
-              controller: ctrl.password,
-              obscureText: true,
-              decoration: InputDecoration(
-                fillColor: Colors.redAccent,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide:
-                      const BorderSide(width: 0, style: BorderStyle.none),
-                ),
-                hintText: 'Password',
-                labelText: 'Password',
-                enabled: false,
-              ),
-            ),
+            
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [

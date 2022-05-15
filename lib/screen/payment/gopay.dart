@@ -1,19 +1,21 @@
-import 'package:nabung_yuk/controller/text_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:nabung_yuk/screen/payment/payment_success.dart';
+import 'package:intl/intl.dart';
+import 'package:nabung_yuk/controller/login_controller.dart';
+import 'package:nabung_yuk/controller/tambah_tabungan_controller.dart';
 
 class Gopay extends StatelessWidget {
   const Gopay({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<TextController>(
-      builder: (ctrl) {
-        Get.put(TextController());
-        final totalUang = ctrl.totalUang.text;
-        return Scaffold(
-          body: Padding(
+    final tambahC = Get.find<TambahTabunganController>();
+    final loginC = Get.find<LoginController>();
+    return Scaffold(
+      body: ValueListenableBuilder(
+        valueListenable: tambahC.uangMasuk,
+        builder: (BuildContext context, value, Widget? child) {
+          return Padding(
             padding: const EdgeInsets.all(20.0),
             child: ListView(children: [
               const Text(
@@ -27,7 +29,7 @@ class Gopay extends StatelessWidget {
               SizedBox(
                 height: 40,
                 child: TextFormField(
-                  controller: ctrl.totalUang,
+                  controller: tambahC.uangMasuk,
                   decoration: InputDecoration(
                     contentPadding: const EdgeInsets.only(left: 10),
                     hintText: '100000',
@@ -46,11 +48,14 @@ class Gopay extends StatelessWidget {
                   const ListTile(
                     leading: Icon(Icons.payment),
                     title: Text('Gopay'),
-                    subtitle: Text('Saldomu : Rp'),
+                    subtitle: Text('Saldomu : Rp 10.000.000'),
                   ),
                   ElevatedButton(
                     onPressed: () {
-                      Get.off(() => const PaymentSuccess());
+                      final format = DateFormat("dd-MM-yyyy HH:mm:ss");
+                      final date = format.format(DateTime.now()).toString();
+                      tambahC.addData(
+                          loginC.email.text, date, tambahC.uangMasuk.text);
                     },
                     child: Row(
                       children: [
@@ -59,7 +64,7 @@ class Gopay extends StatelessWidget {
                           'Konfirmasi & Bayar',
                           style: TextStyle(fontWeight: FontWeight.bold),
                         )),
-                        Text('Rp. '+totalUang),
+                        Text('Rp. ${tambahC.uangMasuk.value.text}'),
                         const Icon(
                           Icons.arrow_circle_right_sharp,
                           size: 27,
@@ -67,16 +72,18 @@ class Gopay extends StatelessWidget {
                       ],
                     ),
                     style: ElevatedButton.styleFrom(
-                        primary: const Color.fromARGB(255, 13, 161, 18),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30))),
+                      primary: const Color.fromARGB(255, 13, 161, 18),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                    ),
                   )
                 ],
               )
             ]),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 }
