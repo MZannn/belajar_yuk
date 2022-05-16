@@ -47,10 +47,32 @@ class TarikTabunganGopay extends StatelessWidget {
               Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  const ListTile(
-                    leading: Icon(Icons.payment),
-                    title: Text('Gopay'),
-                    subtitle: Text('Saldomu : Rp 10.000.000'),
+                  FutureBuilder(
+                    future: homeC.getDataByEmail(loginC.email.text),
+                    builder: (BuildContext context,
+                        AsyncSnapshot<dynamic> snapshot) {
+                      if (snapshot.data != null) {
+                        int uangMasuk = 0;
+                        int uangKeluar = 0;
+                        for (var item
+                            in snapshot.data as List<Map<String, dynamic>>) {
+                          uangMasuk += (item['uangMasuk'] ?? 0)! as int;
+                          uangKeluar += (item['uangKeluar'] ?? 0)! as int;
+                        }
+                        var totalUang = uangMasuk - uangKeluar;
+                        return ListTile(
+                          leading: const Icon(Icons.payment),
+                          title: const Text('Gopay'),
+                          subtitle: Text('Saldomu : Rp. $totalUang'),
+                        );
+                      } else {
+                        return const ListTile(
+                          leading: Icon(Icons.payment),
+                          title: Text('Gopay'),
+                          subtitle: Text('Saldomu : Rp. 0'),
+                        );
+                      }
+                    },
                   ),
                   FutureBuilder(
                     future: homeC.getDataByEmail(loginC.email.text),
@@ -72,10 +94,10 @@ class TarikTabunganGopay extends StatelessWidget {
                             final format = DateFormat("dd-MM-yyyy HH:mm:ss");
                             final date =
                                 format.format(DateTime.now()).toString();
-                            if (tarikUangKeluar - totalUang <= 0 ) {
+                            if (tarikUangKeluar - totalUang <= 0) {
                               tarikC.addData(loginC.email.text, date,
                                   tarikC.uangKeluar.text);
-                                  tarikC.uangKeluar.clear();
+                              tarikC.uangKeluar.clear();
                             } else {
                               Get.defaultDialog(
                                   title: "Saldo Anda Tidak Cukup",
@@ -99,7 +121,7 @@ class TarikTabunganGopay extends StatelessWidget {
                             children: [
                               const Expanded(
                                   child: Text(
-                                'Konfirmasi & Bayar',
+                                'Tarik Tabungan',
                                 style: TextStyle(fontWeight: FontWeight.bold),
                               )),
                               Text('Rp. ${tarikC.uangKeluar.value.text}'),

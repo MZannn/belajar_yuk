@@ -20,7 +20,6 @@ class HomeScreen extends StatelessWidget {
   }
 
   Widget cardPage() {
-    
     final loginC = Get.find<LoginController>();
     final homeC = Get.find<HomeController>();
     return Container(
@@ -39,7 +38,7 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
         child: Container(
-          padding: const EdgeInsets.symmetric(vertical: 26, horizontal: 15),
+          padding: const EdgeInsets.symmetric(vertical: 26, horizontal: 20),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(30),
               gradient: LinearGradient(
@@ -61,9 +60,6 @@ class HomeScreen extends StatelessWidget {
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
                       fontSize: 18)),
-              const SizedBox(
-                height: 5,
-              ),
               const Text("Your Wallet",
                   style: TextStyle(
                       color: Colors.white,
@@ -72,16 +68,16 @@ class HomeScreen extends StatelessWidget {
               Expanded(
                 child: FutureBuilder(
                   future: homeC.getDataByEmail(loginC.email.text),
-                  
                   builder: (context, snapshot) {
                     if (snapshot.data != null) {
                       int uangMasuk = 0;
                       int uangKeluar = 0;
-                      for (var item in snapshot.data as List<Map<String,dynamic>>) {
+                      for (var item
+                          in snapshot.data as List<Map<String, dynamic>>) {
                         uangMasuk += (item['uangMasuk'] ?? 0)! as int;
                         uangKeluar += (item['uangKeluar'] ?? 0)! as int;
                       }
-                      int totalUang = uangMasuk-uangKeluar;
+                      int totalUang = uangMasuk - uangKeluar;
                       return Text(
                         "Rp. " + totalUang.toString(),
                         style: const TextStyle(
@@ -89,18 +85,28 @@ class HomeScreen extends StatelessWidget {
                             fontSize: 20,
                             fontWeight: FontWeight.bold),
                       );
+                    } else {
+                      return const Text(
+                        "Rp. 0",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold),
+                      );
                     }
-                    return const SizedBox();
                   },
                 ),
               ),
-              IconButton(
+              SizedBox(
+                height: 30,
+                child: IconButton(
                 onPressed: () {
-                  Get.to(()=>const TarikTabungan());
+                  Get.to(() => const TarikTabungan());
                 },
                 icon: const Icon(Icons.output_outlined),
                 iconSize: 20,
                 color: Colors.white,
+              ),
               )
             ],
           ),
@@ -153,12 +159,10 @@ class HomeScreen extends StatelessWidget {
                   decoration: const BoxDecoration(
                       border: Border(
                           top: BorderSide(color: Colors.grey, width: 0.5))),
-                  child: TabBarView(children: [
-                    pemasukan(),
-                    pengeluaran()
-                  ]),
+                  child: TabBarView(children: [pemasukan(), pengeluaran()]),
                 ),
-              )
+              ),
+              
             ],
           ),
         ),
@@ -201,6 +205,7 @@ class HomeScreen extends StatelessWidget {
           );
         });
   }
+
   Widget pengeluaran() {
     final homeC = Get.put(HomeController());
     final loginC = Get.find<LoginController>();

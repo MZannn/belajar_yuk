@@ -44,7 +44,6 @@ class RegisterScreen extends StatelessWidget {
                       const SizedBox(
                         height: 10,
                       ),
-                      
                       TextFormField(
                         controller: regisC.email,
                         decoration: const InputDecoration(

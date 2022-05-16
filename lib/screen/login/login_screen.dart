@@ -1,8 +1,9 @@
 import 'package:nabung_yuk/controller/auth_controller.dart';
 import 'package:nabung_yuk/controller/login_controller.dart';
-import 'package:nabung_yuk/screen/login/register_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import 'register_screen.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({Key? key}) : super(key: key);
