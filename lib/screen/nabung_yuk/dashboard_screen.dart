@@ -1,9 +1,9 @@
 import 'package:nabung_yuk/controller/dashboard_controller.dart';
-import 'package:nabung_yuk/screen/nabung/profile_screen.dart';
 import 'package:nabung_yuk/screen/nabung/home_screen.dart';
 import 'package:nabung_yuk/screen/nabung/tambah_tabungan_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:nabung_yuk/screen/nabung_yuk/profile_screen.dart';
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({Key? key}) : super(key: key);
@@ -19,7 +19,7 @@ class DashboardScreen extends StatelessWidget {
               index: controller.tabIndex,
               children: const [
                 HomeScreen(),
-                AkunScreen(),
+                ProfileScreen(),
               ],
             ),
           ),

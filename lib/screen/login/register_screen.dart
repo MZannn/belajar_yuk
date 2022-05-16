@@ -10,7 +10,7 @@ class RegisterScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final _formKey = GlobalKey<FormState>();
     final authC = Get.find<AuthController>();
-    final regisC = Get.find<RegisterController>();
+    final regisC = Get.put(RegisterController());
     return Scaffold(
       body: ListView(
         children: [

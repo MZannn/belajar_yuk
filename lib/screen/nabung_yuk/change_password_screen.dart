@@ -10,7 +10,7 @@ class ChangePassword extends StatelessWidget {
   Widget build(BuildContext context) {
     final _formKey = GlobalKey<FormState>();
     final authC = Get.find<AuthController>();
-    final changePC = Get.find<ChangePasswordController>();
+    final changePC = Get.put(ChangePasswordController());
     return Scaffold(
       appBar: AppBar(
         title: const Text('Ganti Password'),

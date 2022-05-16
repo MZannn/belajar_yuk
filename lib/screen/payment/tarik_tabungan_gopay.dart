@@ -2,18 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:nabung_yuk/controller/login_controller.dart';
-import 'package:nabung_yuk/controller/tambah_tabungan_controller.dart';
+import 'package:nabung_yuk/controller/tarik_tabungan_gopay_controller.dart';
 
-class Gopay extends StatelessWidget {
-  const Gopay({Key? key}) : super(key: key);
+class TarikTabunganGopay extends StatelessWidget {
+  const TarikTabunganGopay({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final tambahC = Get.find<TambahTabunganController>();
+    final tarikC = Get.put(TarikTabunganController());
     final loginC = Get.find<LoginController>();
     return Scaffold(
       body: ValueListenableBuilder(
-        valueListenable: tambahC.uangMasuk,
+        valueListenable: tarikC.uangKeluar,
         builder: (BuildContext context, value, Widget? child) {
           return Padding(
             padding: const EdgeInsets.all(20.0),
@@ -29,7 +29,7 @@ class Gopay extends StatelessWidget {
               SizedBox(
                 height: 40,
                 child: TextFormField(
-                  controller: tambahC.uangMasuk,
+                  controller: tarikC.uangKeluar,
                   decoration: InputDecoration(
                     contentPadding: const EdgeInsets.only(left: 10),
                     hintText: '100000',
@@ -54,8 +54,8 @@ class Gopay extends StatelessWidget {
                     onPressed: () {
                       final format = DateFormat("dd-MM-yyyy HH:mm:ss");
                       final date = format.format(DateTime.now()).toString();
-                      tambahC.addData(
-                          loginC.email.text, date, tambahC.uangMasuk.text);
+                      tarikC.addData(
+                          loginC.email.text, date, tarikC.uangKeluar.text);
                     },
                     child: Row(
                       children: [
@@ -64,7 +64,7 @@ class Gopay extends StatelessWidget {
                           'Konfirmasi & Bayar',
                           style: TextStyle(fontWeight: FontWeight.bold),
                         )),
-                        Text('Rp. ${tambahC.uangMasuk.value.text}'),
+                        Text('Rp. ${tarikC.uangKeluar.value.text}'),
                         const Icon(
                           Icons.arrow_circle_right_sharp,
                           size: 27,

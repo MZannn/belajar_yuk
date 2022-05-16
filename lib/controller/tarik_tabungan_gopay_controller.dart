@@ -4,17 +4,17 @@ import 'package:get/get.dart';
 
 import '../screen/payment/payment_success.dart';
 
-class TambahTabunganController extends GetxController {
-  final uangMasuk = TextEditingController();
-  CollectionReference pemasukan =
-      FirebaseFirestore.instance.collection("pemasukan");
+class TarikTabunganController extends GetxController {
+  final uangKeluar = TextEditingController();
+  final pengeluaran =
+      FirebaseFirestore.instance.collection("pengeluaran");
 
-  void addData(String email, String date, String uangMasuk) async {
+  void addData(String email, String date, String uangKeluar) async {
     try {
-      await pemasukan.add(
+      await pengeluaran.add(
         {
           "email": email,
-          "uangMasuk": int.parse(uangMasuk),
+          "uangKeluar": int.parse(uangKeluar),
           "date": date,
         },
       );

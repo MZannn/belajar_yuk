@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nabung_yuk/controller/home_controller.dart';
 import 'package:nabung_yuk/controller/login_controller.dart';
+import 'package:nabung_yuk/screen/nabung/tarik_tabungan_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -19,11 +20,8 @@ class HomeScreen extends StatelessWidget {
   }
 
   Widget cardPage() {
-    final homeC = Get.find<HomeController>();
+    final homeC = Get.put(HomeController());
     final loginC = Get.find<LoginController>();
-    final db = FirebaseFirestore.instance;
-    CollectionReference pemasukan = db.collection("pemasukan");
-    num sum = 0;
     return Container(
       height: 280,
       padding: const EdgeInsets.all(50),
@@ -40,7 +38,7 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
         child: Container(
-          padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 15),
+          padding: const EdgeInsets.symmetric(vertical: 26, horizontal: 15),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(30),
               gradient: LinearGradient(
@@ -73,21 +71,36 @@ class HomeScreen extends StatelessWidget {
               Expanded(
                 child: FutureBuilder(
                   future: homeC.getDataByEmail(loginC.email.text),
+                  
                   builder: (context, snapshot) {
                     if (snapshot.data != null) {
-                      var uang = 0;
-                      for (var item in snapshot.data as List) {
-                        uang += item['uang'] as int;
+                      int uangMasuk = 0;
+                      int uangKeluar = 0;
+                      for (var item in snapshot.data as List<Map<String,dynamic>>) {
+                        uangMasuk += (item['uangMasuk'] ?? 0)! as int;
+                        uangKeluar += (item['uangKeluar'] ?? 0)! as int;
                       }
-                      return Text(uang.toString(),style: const TextStyle(
+                      int totalUang = uangMasuk-uangKeluar;
+                      return Text(
+                        "Rp. " + totalUang.toString(),
+                        style: const TextStyle(
                             color: Colors.white,
                             fontSize: 20,
-                            fontWeight: FontWeight.bold),);
+                            fontWeight: FontWeight.bold),
+                      );
                     }
                     return const SizedBox();
                   },
                 ),
               ),
+              IconButton(
+                onPressed: () {
+                  Get.to(()=>const TarikTabungan());
+                },
+                icon: const Icon(Icons.output_outlined),
+                iconSize: 20,
+                color: Colors.white,
+              )
             ],
           ),
         ),
@@ -141,12 +154,7 @@ class HomeScreen extends StatelessWidget {
                           top: BorderSide(color: Colors.grey, width: 0.5))),
                   child: TabBarView(children: [
                     pemasukan(),
-                    const ListTile(
-                      leading: Icon(Icons.call_missed_outgoing),
-                      title: Text("Pengeluaran"),
-                      subtitle: Text("Yesterday"),
-                      trailing: Text("Rp. 30.000"),
-                    ),
+                    pengeluaran()
                   ]),
                 ),
               )
@@ -161,7 +169,7 @@ class HomeScreen extends StatelessWidget {
     final controller = Get.put(HomeController());
     final loginC = Get.find<LoginController>();
     return StreamBuilder<QuerySnapshot<Object?>>(
-        stream: controller.streamData(),
+        stream: controller.streamPemasukan(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.active) {
             var listAllDocs = snapshot.data!.docs;
@@ -177,7 +185,42 @@ class HomeScreen extends StatelessWidget {
                     subtitle: Text(
                         "${(listAllDocs[index].data() as Map<String, dynamic>)["date"]}"),
                     trailing: Text(
-                        "Rp. ${(listAllDocs[index].data() as Map<String, dynamic>)["uang"]}"),
+                        "Rp. ${(listAllDocs[index].data() as Map<String, dynamic>)["uangMasuk"]}"),
+                  );
+                }
+                return const SizedBox();
+                // tabPage();
+              },
+            );
+          }
+          return const Center(
+            child: CircularProgressIndicator(
+              color: Colors.redAccent,
+            ),
+          );
+        });
+  }
+  Widget pengeluaran() {
+    final homeC = Get.put(HomeController());
+    final loginC = Get.find<LoginController>();
+    return StreamBuilder<QuerySnapshot<Object?>>(
+        stream: homeC.streamPengeluaran(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.active) {
+            var listAllDocs = snapshot.data!.docs;
+            return ListView.builder(
+              itemCount: listAllDocs.length,
+              itemBuilder: (BuildContext context, int index) {
+                if (loginC.email.text ==
+                    ((listAllDocs[index].data()
+                        as Map<String, dynamic>)["email"])) {
+                  return ListTile(
+                    leading: const Icon(Icons.call_missed_outgoing),
+                    title: const Text("Pengeluaran"),
+                    subtitle: Text(
+                        "${(listAllDocs[index].data() as Map<String, dynamic>)["date"]}"),
+                    trailing: Text(
+                        "Rp. ${(listAllDocs[index].data() as Map<String, dynamic>)["uangKeluar"]}"),
                   );
                 }
                 return const SizedBox();

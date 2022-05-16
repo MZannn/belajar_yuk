@@ -1,9 +1,9 @@
-import 'package:nabung_yuk/screen/payment/gopay.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:nabung_yuk/screen/payment/tarik_tabungan_gopay.dart';
 
-class Menabung extends StatelessWidget {
-  const Menabung({Key? key}) : super(key: key);
+class TarikTabungan extends StatelessWidget {
+  const TarikTabungan({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +19,7 @@ class Menabung extends StatelessWidget {
                   },
                   icon: const Icon(Icons.arrow_back_ios)),
               const Text(
-                'Tambah Tabungan',
+                'Tarik Tabungan',
                 style: TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
@@ -40,7 +40,7 @@ class Menabung extends StatelessWidget {
                         style: TextStyle(color: Colors.black),
                       ),
                       onPressed: () {
-                        Get.off(() => const Gopay());
+                        Get.off(() => const TarikTabunganGopay());
                       },
                     ))
               ],
