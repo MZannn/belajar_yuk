@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.belajar_yuk">
+    package="com.example.nabung_yuk">
    <application
-        android:label="belajar_yuk"
+        android:label="nabung_yuk"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

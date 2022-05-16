@@ -1,4 +1,4 @@
-package com.example.belajar_yuk
+package com.example.nabung_yuk
 
 import io.flutter.embedding.android.FlutterActivity
 
