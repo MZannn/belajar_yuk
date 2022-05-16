@@ -1,10 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:nabung_yuk/controller/dashboard_controller.dart';
 import 'package:nabung_yuk/controller/login_controller.dart';
-import 'package:nabung_yuk/screen/login/loading_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'screen/authentication/loading_screen.dart';
 import 'screen/authentication/login_screen.dart';
 import 'screen/nabung_yuk/dashboard_screen.dart';
 import 'controller/auth_controller.dart';
