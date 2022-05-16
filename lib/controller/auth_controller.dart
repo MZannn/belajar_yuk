@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:nabung_yuk/controller/dashboard_controller.dart';
 import 'package:nabung_yuk/screen/login/login_screen.dart';
 
-import '../screen/nabung/dashboard_screen.dart';
+import '../screen/nabung_yuk/dashboard_screen.dart';
 
 class AuthController extends GetxController {
   final FirebaseAuth _auth = FirebaseAuth.instance;

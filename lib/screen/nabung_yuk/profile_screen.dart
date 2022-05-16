@@ -1,11 +1,11 @@
 import 'package:nabung_yuk/controller/auth_controller.dart';
 import 'package:nabung_yuk/controller/login_controller.dart';
-import 'package:nabung_yuk/screen/nabung/change_password_screen.dart';
+import 'change_password_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class AkunScreen extends StatelessWidget {
-  const AkunScreen({Key? key}) : super(key: key);
+class ProfileScreen extends StatelessWidget {
+  const ProfileScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

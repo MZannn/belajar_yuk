@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nabung_yuk/controller/home_controller.dart';
 import 'package:nabung_yuk/controller/login_controller.dart';
-import 'package:nabung_yuk/screen/nabung/tarik_tabungan_screen.dart';
+import 'tarik_tabungan_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -20,8 +20,9 @@ class HomeScreen extends StatelessWidget {
   }
 
   Widget cardPage() {
-    final homeC = Get.put(HomeController());
+    
     final loginC = Get.find<LoginController>();
+    final homeC = Get.find<HomeController>();
     return Container(
       height: 280,
       padding: const EdgeInsets.all(50),

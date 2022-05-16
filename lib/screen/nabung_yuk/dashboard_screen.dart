@@ -1,9 +1,9 @@
 import 'package:nabung_yuk/controller/dashboard_controller.dart';
-import 'package:nabung_yuk/screen/nabung/home_screen.dart';
-import 'package:nabung_yuk/screen/nabung/tambah_tabungan_screen.dart';
+import 'home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:nabung_yuk/screen/nabung_yuk/profile_screen.dart';
+import 'profile_screen.dart';
+import 'package:nabung_yuk/screen/payment/tambah_tabungan_gopay.dart';
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({Key? key}) : super(key: key);
@@ -25,7 +25,7 @@ class DashboardScreen extends StatelessWidget {
           ),
           floatingActionButton: FloatingActionButton(
             onPressed: () {
-              Get.to(() => const Menabung());
+              Get.to(() => const TambahTabunganGopay());
             },
             child: const Icon(Icons.add),
             backgroundColor: Colors.redAccent,

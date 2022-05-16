@@ -57,6 +57,7 @@ class TambahTabunganGopay extends StatelessWidget {
                       final date = format.format(DateTime.now()).toString();
                       tambahC.addData(
                           loginC.email.text, date, tambahC.uangMasuk.text);
+                      tambahC.uangMasuk.clear();
                     },
                     child: Row(
                       children: [

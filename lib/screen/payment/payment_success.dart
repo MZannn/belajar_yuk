@@ -1,6 +1,7 @@
-import 'package:nabung_yuk/screen/nabung/dashboard_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../nabung_yuk/dashboard_screen.dart';
 
 class PaymentSuccess extends StatelessWidget {
   const PaymentSuccess({Key? key}) : super(key: key);
